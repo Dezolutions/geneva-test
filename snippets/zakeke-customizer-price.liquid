@@ -1,0 +1,86 @@
+<script>
+  window.zakekeProductAdvancedProcessing = true;
+  
+  {% if product %}
+  window.zakekePricingData = {
+    variantId: {{ product.selected_or_first_available_variant.id | json }},
+    cart: {{ cart | json }},
+    product: {{ product | json }}
+  };
+  {% endif %}
+
+  window.zakekeShopLocales = [
+    {% for locale in shop.published_locales %}
+    {
+      iso_code: {{ locale.iso_code | json }},
+      root_url: {{ locale.root_url | json }},
+      primary: {{ locale.primary | json }}
+    },
+    {% endfor %}
+  ];
+</script>
+
+<script src="https://unpkg.com/@glidejs/glide@3.4.1/dist/glide.js"></script>
+<!-- Required Core Stylesheet -->
+<link rel="stylesheet" href="https://unpkg.com/@glidejs/glide@3.4.1/dist/css/glide.core.css">
+<!-- Optional Theme Stylesheet -->
+<link rel="stylesheet" href="https://unpkg.com/@glidejs/glide@3.4.1/dist/css/glide.theme.css">
+
+<style>
+.glide__arrow.prev {
+    left: 0;
+    }
+
+.glide__arrow.next {
+    right: 0;
+}
+
+.glide__slides {
+    margin: 0px;
+    list-style: none;
+}
+
+.glide__arrow {
+  border: none !important;
+  box-shadow: none !important;
+}
+  
+.zakeke-cart-preview-window {
+    position: fixed;
+top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.94);
+z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.zakeke-cart-preview-window-label {
+    padding: 20px;
+}
+
+.zakeke-cart-preview-window-label h3
+{
+    color: white;
+}
+
+.zakeke-cart-previews {
+    position: relative;
+    max-width: 260px;
+}
+
+@media (max-width: 768px) {
+    .zakeke-cart-previews {
+      max-width: 130px;
+	}
+}
+
+.zakeke-cart-preview {
+    cursor: pointer;
+}
+</style>

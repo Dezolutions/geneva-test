@@ -1,0 +1,95 @@
+{% if template.name == 'product' %} 
+	<script src='https://cdn.jsdelivr.net/gh/yunmuqing/optionv-0.0@latest/spotlight.js'></script>
+
+	<link href='https://cdn.jsdelivr.net/gh/yunmuqing/optionv-0.0@latest/ymq-option.css' rel='stylesheet'> 
+
+	<link href='https://option.ymq.cool/option/bottom.css' rel='stylesheet'> 
+
+	<style id="ymq-jsstyle"></style> 
+
+	<script> 
+		window.best_option = window.best_option || {}; 
+
+		best_option.shop = `{{ shop.permanent_domain }}`; 
+
+		best_option.page = `{{template.name}}`; 
+
+		best_option.ymq_option_branding = {}; 
+		{% if shop.metafields.ymq_best_option.branding %}  
+			best_option.ymq_option_branding = {{ shop.metafields.ymq_best_option.branding | json }}; 
+		{% endif %} 
+
+		best_option.ymq_option_settings = {}; 
+		{% if shop.metafields.ymq_option.settings %}  
+			best_option.ymq_option_settings = {{ shop.metafields.ymq_option.settings | json }}; 
+		{% endif %}
+	        
+		best_option.product = {{ product | json }}; 
+
+		best_option.ymq_has_only_default_variant = true; 
+		{% unless product.has_only_default_variant %} 
+			best_option.ymq_has_only_default_variant = false; 
+		{% endunless %} 
+
+		best_option.ymq_status = {}; 
+		{% if product.metafields.ymq_option.ymq_status %} 
+			best_option.ymq_status = {{ product.metafields.ymq_option.ymq_status | json }}; 
+		{% endif %} 
+
+		best_option.ymq_variantjson = {}; 
+		{% if product.metafields.ymq_option.ymq_variantjson %} 
+			best_option.ymq_variantjson = {{ product.metafields.ymq_option.ymq_variantjson | json }}; 
+		{% endif %} 
+
+		best_option.ymq_option_data = {}; 
+		{% if product.metafields.ymq_option.data %} 
+			best_option.ymq_option_data = {{ product.metafields.ymq_option.data | json }}; 
+		{% endif %}
+	        
+	    best_option.ymq_variant_condition = {}; 
+		{% if product.metafields.ymq_option.variant_condition %} 
+			best_option.ymq_variant_condition = {{ product.metafields.ymq_option.variant_condition | json }}; 
+		{% endif %}
+
+		best_option.ymq_option_condition = {}; 
+		{% if product.metafields.ymq_option.condition %} 
+			best_option.ymq_option_condition = {{ product.metafields.ymq_option.condition | json }}; 
+		{% endif %} 
+
+	    best_option.ymq_option_template = {};
+		best_option.ymq_option_template_condition = {}; 
+	    {% assign ymq_template_to_product_value = product.metafields.ymq_option.ymq_template_to_product %}
+	    {% assign ymq_template_to_product_keys = ymq_template_to_product_value | split: "," %}
+	    {% for key in ymq_template_to_product_keys %}    
+	      {% assign ymq_template = 'ymq_template_' | append: key %} 
+	      {% assign ymq_condition = 'ymq_condition_' | append: key %} 
+	       {% if shop.metafields.ymq_option[ymq_template] %} 
+	          best_option.ymq_option_template[`tem{{key}}`] = {{ shop.metafields.ymq_option[ymq_template] | json }}
+	          best_option.ymq_option_template_condition[`tem{{key}}`] = {{ shop.metafields.ymq_option[ymq_condition] | json }} 
+	       {% endif %} 
+	    {% endfor %}                                   
+	                                                                      
+		{% if product.options_with_values %}   
+			best_option.ymq_shopify_options = {}; 
+			{% for option in product.options_with_values %} 
+				best_option.ymq_shopify_options[`{{ option.name }}`] = []; 
+				{% for value in option.values %} 
+					best_option.ymq_shopify_options[`{{ option.name }}`].push(`{{ value | escape }}`); 
+				{% endfor %} 
+			{% endfor %} 
+		{% endif %} 
+
+		best_option.ymq_inventory_quantity = [];  
+		{% for v in product.variants %}   
+			best_option.ymq_inventory_quantity.push({{v.inventory_quantity}}); 
+		{% endfor %} 
+
+		if(best_option.product) {   
+			for (var i = 0; i < best_option.product.variants.length; i += 1) { 
+				best_option.product.variants[i].inventory_quantity = best_option.ymq_inventory_quantity[i]; 
+			 }  
+		} 
+	</script>
+
+<script src='https://options.ymq.cool/option/best-options.js'></script>
+{% endif %} 

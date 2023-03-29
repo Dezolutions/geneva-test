@@ -1,0 +1,50 @@
+{% for p in item.properties %}
+  {% assign property_prefix = p.first | slice: 0 %}
+  {% unless p.last == blank or property_prefix == '_' %}
+    {{ p.first }}:
+
+    {% comment %}
+    	Check if there was an uploaded file associated
+    {% endcomment %}
+    {% if p.last contains '/uploads/' %}
+    	<a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                    {% else %}
+                {{ p.last }}
+    {% endif %}
+<br/>
+{% endunless %}
+{% endfor %}
+
+{% if item.properties._previews %}
+    {% assign previews = item.properties._previews | split: ',' %}
+    {% if previews.size > 0 %}
+  	<div class="glide zakeke-cart-previews" style="width: 260px">
+    <div class="glide__track" data-glide-el="track">
+      <ul class="glide__slides">
+        {% for preview in previews %}
+          {% assign preview_url = preview | split: '#' | first %}
+          {% assign preview_label = preview | split: '#' | last %}
+          <li class="glide__slide zakeke-cart-preview"
+              data-url="{{ preview_url }}"
+              data-label="{{ preview_label }}"
+              >
+            <img style ="width: 130px" src="{{ preview_url }}" alt="{{ preview_label }}" title="{{ preview_label }}">
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+      <div data-glide-el="controls">
+        <button class="slider__arrow prev glide__arrow" data-glide-dir="<">
+          <svg xmlns ="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+            <path d ="M0 12l10.975 11 2.848-2.828-6.176-6.176H24v-3.992H7.646l6.176-6.176L10.975 1 0 12z"></path>
+          </svg>
+        </button>
+        <button class="slider__arrow next glide__arrow" data-glide-dir=">">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+            <path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+   {% endif %}
+{% endif %}

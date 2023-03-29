@@ -1,0 +1,15 @@
+{% if product.content contains 'zakeke' and product.content contains 'Composer' %}
+<button id="zakeke-configurator" class="btn product-form__cart-submit">
+  <span>Configure</span>
+</button>
+<script>
+    document.querySelector('#zakeke-configurator').addEventListener('click', function (e) {
+    e.preventDefault();
+    let rootUrl = '{{ routes.root_url }}';
+    if (rootUrl !== '/') {
+      rootUrl = rootUrl + '/';
+    }
+    window.location.href = rootUrl + 'apps/zakeke/c/{{ product.handle }}?variant=' + document.querySelector('select[name=id], input[name=id]').value;
+});
+</script>
+{% endif %}
