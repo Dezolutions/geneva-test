@@ -29,12 +29,21 @@
   max-width: 100%;
   display: block;
   margin: 0 auto;
+  object-fit: contain;
   transition: opacity .2s ease;
 }
 
 @media screen and (min-width: 751px) {
   .grid-4-col-desktop .grid-item {
     width: calc(25% - 1rem * 3 / 4);
+  }
+
+  .grid-3-col-desktop .grid-item {
+    width: calc(33.33% - 1rem * 2 / 3);
+  }
+
+  .grid-2-col-desktop .grid-item {
+    width: calc(50% - 1rem / 2);
   }
 }
 
@@ -65,3 +74,18 @@
   }
 }
 
+.img-aspect-ratio-1-1 {
+  aspect-ratio: 1 / 1;
+}
+
+.img-aspect-ratio-16-9 {
+  aspect-ratio: 16 / 9;
+}
+
+.img-aspect-ratio-4-3 {
+  aspect-ratio: 4 / 3;
+}
+
+.img-aspect-ratio-3-4 {
+  aspect-ratio: 3 / 4;
+}

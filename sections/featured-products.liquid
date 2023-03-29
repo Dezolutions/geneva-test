@@ -10,14 +10,15 @@
   
   <ul id="main-feature-product-grid" data-id="{{ section.id }}" class="
     feature-products-grid
-    grid-4-col-desktop
-    grid-1-col-tablet feature-product-list">
+    grid-{{ section.settings.column_number_desktop }}-col-desktop
+    grid-{{ section.settings.column_number_mobile }}-col-tablet">
     
     {% for block in section.blocks %}
       
        <li class="grid-item">
         {% render 'feature-product-card',
-          product_card: block.settings.product
+          product_card: block.settings.product,
+          aspect-ratio: section.settings.aspect_ratio
         %}
       </li> 
     {% endfor %}
@@ -34,6 +35,64 @@
       "id": "title",
       "default": "Featured products",
       "label": "Section title"
+    },
+    {
+      "type": "range",
+      "id": "section_width",
+      "label": "Section container width '%'",
+      "min": 80,
+      "max": 100,
+      "step": 1,
+      "default": 99
+    },
+    {
+      "type": "range",
+      "id": "column_number_desktop",
+      "label": "Number of columns on desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "column_number_mobile",
+      "label": "Number of columns on mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "options": [
+        {
+          "value": "1-1",
+          "label": "1:1"
+        },
+        {
+          "value": "16-9",
+          "label": "16:9"
+        },
+        {
+          "value": "4-3",
+          "label": "4:3"
+        },
+        {
+          "value": "3-4",
+          "label": "3:4"
+        }
+      ],
+      "default": "1-1",
+      "label": "Image aspect ratio"
     }
   ],
   "blocks": [
