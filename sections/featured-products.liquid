@@ -18,7 +18,9 @@
        <li class="grid-item">
         {% render 'feature-product-card',
           product_card: block.settings.product,
-          aspect-ratio: section.settings.aspect_ratio
+          aspect-ratio: section.settings.aspect_ratio,
+          custom-image: block.settings.custom_image,
+          image-format: block.settings.image_format
         %}
       </li> 
     {% endfor %}
@@ -104,6 +106,27 @@
           "type": "product",
           "id": "product",
           "label": "Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom image instead of featured image"
+        },
+        {
+          "type": "select",
+          "id": "image_format",
+          "label": "Format of image container",
+          "options": [
+            {
+              "value": "cover",
+              "label": "cover"
+            },
+            {
+              "value": "contain",
+              "label": "contain"
+            }
+          ],
+          "default": "contain"
         }
       ]
     }
