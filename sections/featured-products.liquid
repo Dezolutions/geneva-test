@@ -1,0 +1,72 @@
+{{ 'featured-products.css' | asset_url | stylesheet_tag }}
+{% style %}
+.section-width {
+  width: {{ section.settings.section_width }}%;
+}
+{% endstyle %}
+
+<div class="section-width featured-products-section page-width">
+  <h1>{{ section.settings.title | escape }}</h1>
+  
+  <ul id="main-feature-product-grid" data-id="{{ section.id }}" class="
+    feature-products-grid
+    grid-4-col-desktop
+    grid-1-col-tablet feature-product-list">
+    
+    {% for block in section.blocks %}
+      
+       <li class="grid-item">
+        {% render 'feature-product-card',
+          product_card: block.settings.product
+        %}
+      </li> 
+    {% endfor %}
+  </ul>
+</div>
+
+{% schema %}
+{
+  "name": "Featured products",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "Featured products",
+      "label": "Section title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product-block",
+      "name": "Product Block",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured products",
+      "blocks": [
+        {
+          "type": "product-block"
+        },
+        {
+          "type": "product-block"
+        },
+        {
+          "type": "product-block"
+        },
+        {
+          "type": "product-block"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -217,6 +217,9 @@
     "footer": {
       "payment": "Payment methods"
     },
+    "featured_products": {
+      "feature-product__button": "Shop now"
+    },
     "featured_blog": {
       "view_all": "View all",
       "onboarding_title": "Blog post",
