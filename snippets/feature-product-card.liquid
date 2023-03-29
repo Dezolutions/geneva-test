@@ -1,6 +1,6 @@
 <div class="feature-product__card">
 
-  <div class="feature-product__media-container feature-hover-effect-{{product_card.id}}">
+  <feature-media class="feature-product__media-container feature-hover-effect-{{product_card.id}}">
 
     <img class="feature-product__media-img format-image-{{ image-format }}-{{ product_card.id }} img-aspect-ratio-{{ aspect-ratio }}"
       {% if custom-image == nil %}
@@ -23,7 +23,14 @@
       alt="{{ product_card.featured_media.alt | escape }}"
       loading="lazy"
       >
-  </div>
+    {% for media in product_card.media %}
+      {%- if media.media_type == 'video' -%}
+        <div class="feature-product__media-video">
+          {{ media | media_tag: image_size: "533x", autoplay: false, loop: true, muted: true, controls: true, playsinline: true, preload: "none" }}
+        </div>
+      {%- endif -%}
+    {% endfor %}
+  </feature-media>
   
   {% style %}
     .format-image-cover-{{product_card.id}} {
@@ -34,6 +41,34 @@
     }
   {% endstyle %}
 
+  {% for media in product_card.media %}
+    {%- if media.media_type === 'video' -%}
+      {% style %}
+        @media (hover: hover) {
+          .feature-hover-effect-{{ product_card.id }}:hover .feature-product__media-video {
+            opacity: 1;
+            visibility: visible;
+          }
+
+          .feature-hover-effect-{{ product_card.id }}:hover .feature-product__media-img {
+            opacity: 0;
+            visibility: hidden;
+          }
+        }
+        
+        .feature-card-img-hover {
+          opacity: 0;
+          visibility: hidden;
+        }
+        .feature-card-video-active {
+          opacity: 1;
+          visibility: visible;
+        }
+        
+        
+      {% endstyle %}
+    {% endif %}
+  {% endfor %}
   <div class="feature-product__description">
     <div class="feature-product__title">{{ product_card.title }}</div>
     <div class="feature-product__price">
