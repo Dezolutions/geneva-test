@@ -217,6 +217,13 @@
     "footer": {
       "payment": "Payment methods"
     },
+    "featured_products": {
+      "button": "Shop now",
+      "quick-add-button": "Quick Add",
+      "quick-add-button_adding": "Adding...",
+      "quick-add-button_added": "Added",
+      "choose_options": "Choose Options"
+    },
     "featured_blog": {
       "view_all": "View all",
       "onboarding_title": "Blog post",

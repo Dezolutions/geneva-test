@@ -1,0 +1,166 @@
+{{ 'featured-products.css' | asset_url | stylesheet_tag }}
+{% style %}
+.section-width {
+  width: {{ section.settings.section_width }}%;
+}
+{% endstyle %}
+
+<div class="section-width featured-products-section page-width">
+  <h1>{{ section.settings.title | escape }}</h1>
+  
+  <ul id="main-feature-product-grid" data-id="{{ section.id }}" class="
+    feature-products-grid
+    grid-{{ section.settings.column_number_desktop }}-col-desktop
+    grid-{{ section.settings.column_number_mobile }}-col-tablet">
+    
+    {% for block in section.blocks %}
+      
+       <li class="grid-item">
+        {% render 'feature-product-card',
+          product_card: block.settings.product,
+          aspect-ratio: section.settings.aspect_ratio,
+          custom-image: block.settings.custom_image,
+          image-format: block.settings.image_format,
+          quick-add: section.settings.quick_add
+        %}
+      </li> 
+    {% endfor %}
+  </ul>
+</div>
+{%- if section.settings.quick_add -%}
+  <link rel="stylesheet" href="{{ 'feature-quick-add.css' | asset_url }}" media="print" onload="this.media='all'">
+  <script src="{{ 'feature-quick-add.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+<script src="{{ 'feature-video.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "t:sections.featured_products.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "Featured products",
+      "label": "t:sections.featured_products.section_label"
+    },
+    {
+      "type": "range",
+      "id": "section_width",
+      "label": "t:sections.featured_products.container_width",
+      "min": 80,
+      "max": 100,
+      "step": 1,
+      "default": 99
+    },
+    {
+      "type": "range",
+      "id": "column_number_desktop",
+      "label": "t:sections.featured_products.desktop_columns",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "column_number_mobile",
+      "label": "t:sections.featured_products.mobile_columns.name",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:sections.featured_products.mobile_columns.option_1"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.featured_products.mobile_columns.option_2"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "options": [
+        {
+          "value": "1-1",
+          "label": "t:sections.featured_products.aspect_ratio.option_1"
+        },
+        {
+          "value": "16-9",
+          "label": "t:sections.featured_products.aspect_ratio.option_2"
+        },
+        {
+          "value": "4-3",
+          "label": "t:sections.featured_products.aspect_ratio.option_3"
+        },
+        {
+          "value": "3-4",
+          "label": "t:sections.featured_products.aspect_ratio.option_4"
+        }
+      ],
+      "default": "1-1",
+      "label": "t:sections.featured_products.aspect_ratio.name"
+    },
+    {
+      "type": "checkbox",
+      "id": "quick_add",
+      "default": false,
+      "label": "t:sections.featured_products.quick_add"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product-block",
+      "name": "t:sections.featured_products.blocks.name",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:sections.featured_products.blocks.product_label"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "t:sections.featured_products.blocks.custom_image"
+        },
+        {
+          "type": "select",
+          "id": "image_format",
+          "label": "t:sections.featured_products.blocks.image_format.name",
+          "options": [
+            {
+              "value": "cover",
+              "label": "t:sections.featured_products.blocks.image_format.option_1"
+            },
+            {
+              "value": "contain",
+              "label": "t:sections.featured_products.blocks.image_format.option_2"
+            }
+          ],
+          "default": "contain"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.featured_products.name",
+      "blocks": [
+        {
+          "type": "product-block"
+        },
+        {
+          "type": "product-block"
+        },
+        {
+          "type": "product-block"
+        },
+        {
+          "type": "product-block"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

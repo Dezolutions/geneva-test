@@ -1,0 +1,190 @@
+<div class="feature-product__card">
+
+  <feature-media class="feature-product__media-container feature-hover-effect-{{product_card.id}}">
+
+    <img class="feature-product__media-img format-image-{{ image-format }}-{{ product_card.id }} img-aspect-ratio-{{ aspect-ratio }}"
+      {% if custom-image == nil %}
+        srcset="{%- if product_card.featured_media.width >= 165 -%}{{ product_card.featured_media | img_url: '165x' }} 165w,{%- endif -%}
+        {%- if product_card.featured_media.width >= 360 -%}{{ product_card.featured_media | img_url: '360x' }} 360w,{%- endif -%}
+        {%- if product_card.featured_media.width >= 533 -%}{{ product_card.featured_media | img_url: '533x' }} 533w,{%- endif -%}
+        {%- if product_card.featured_media.width >= 720 -%}{{ product_card.featured_media | img_url: '720x' }} 720w,{%- endif -%}
+        {%- if product_card.featured_media.width >= 940 -%}{{ product_card.featured_media | img_url: '940x' }} 940w,{%- endif -%}
+        {%- if product_card.featured_media.width >= 1066 -%}{{ product_card.featured_media | img_url: '1066x' }} 1066w{%- endif -%}"
+      {% else %}
+        srcset="{%- if custom-image.width >= 165 -%}{{ custom-image | img_url: '165x' }} 165w,{%- endif -%}
+      {%- if custom-image.width >= 360 -%}{{ custom-image | img_url: '360x' }} 360w,{%- endif -%}
+      {%- if custom-image.width >= 533 -%}{{ custom-image | img_url: '533x' }} 533w,{%- endif -%}
+      {%- if custom-image.width >= 720 -%}{{ custom-image | img_url: '720x' }} 720w,{%- endif -%}
+      {%- if custom-image.width >= 940 -%}{{ custom-image | img_url: '940x' }} 940w,{%- endif -%}
+      {%- if custom-image.width >= 1066 -%}{{ custom-image | img_url: '1066x' }} 1066w{%- endif -%}"
+      {% endif %}
+      src="
+      {% if custom-image != nil %}{{ custom-image | img_url: '533x' }} {% else %} {{ product_card.featured_media | img_url: '533x' }} {% endif %}"
+      alt="{{ product_card.featured_media.alt | escape }}"
+      loading="lazy"
+      >
+    {% for media in product_card.media %}
+      {%- if media.media_type == 'video' -%}
+        <div class="feature-product__media-video">
+          {{ media | media_tag: image_size: "533x", autoplay: false, loop: true, muted: true, controls: true, playsinline: true, preload: "none" }}
+        </div>
+      {%- endif -%}
+    {% endfor %}
+  </feature-media>
+  
+  {% style %}
+    .format-image-cover-{{product_card.id}} {
+      object-fit: cover;
+    }
+    .format-image-contain-{{product_card.id}} {
+      object-fit: contain;
+    }
+  {% endstyle %}
+
+  {% for media in product_card.media %}
+    {%- if media.media_type == 'video' -%}
+      {% style %}
+        @media (hover: hover) {
+          .feature-hover-effect-{{ product_card.id }}:hover .feature-product__media-video {
+            opacity: 1;
+            visibility: visible;
+          }
+
+          .feature-hover-effect-{{ product_card.id }}:hover .feature-product__media-img {
+            opacity: 0;
+            visibility: hidden;
+          }
+        }
+        
+        .feature-card-img-hover {
+          opacity: 0;
+          visibility: hidden;
+        }
+        .feature-card-video-active {
+          opacity: 1;
+          visibility: visible;
+        }
+        
+        
+      {% endstyle %}
+    {% endif %}
+  {% endfor %}
+  <div class="feature-product__description">
+    <div class="feature-product__title">{{ product_card.title }}</div>
+    <div class="feature-product__price">
+      <div class="product__price-block">
+        <p class="product__compare-at-price {% unless product_card.selected_or_first_available_variant.compare_at_price > product_card.selected_or_first_available_variant.price %} hide {% endunless%}">{{ product_card.selected_or_first_available_variant.compare_at_price | money }}</p>
+        <p class="product__price">{{ product_card.selected_or_first_available_variant.price | money }}</p>
+      </div>
+    </div>
+    <div class="feature-product__button">
+      <a class="feature-product__button-link" href="{{ product_card.url | default: '#' }}">{{ 'sections.featured_products.button' | t }}</a>
+    </div>
+    {% if quick-add %}
+      {% if product_card.variants.size > 1 %}
+        <quick-add-modal-opener>
+          <button class="feature-product__button-modal">
+            {{ 'sections.featured_products.choose_options' | t }}
+          </button>
+          <div class="quick-add-modal">
+            <div class="quick-add-modal__content">
+              <div class="quick-add-modal__info">
+                <quick-add-modal class="quick-product">
+                  <div class="quick-product__media">
+                    {%- if product_card.selected_or_first_available_variant.featured_media != null -%}
+                      {%- assign media = product_card.selected_or_first_available_variant.featured_media -%}
+                        <img
+                          class="quick-product__media-img"
+                          src="{{ media | img_url: '300x' }}"
+                          loading="lazy"
+                          alt="{{ media.preview_image.alt | escape }}"
+                        >
+                    {%- endif -%}
+                  </div>
+                  <div class="quick-product__info">
+                    <h1 class="product__title" >
+                      {{ product_card.title }}
+                    </h1>
+                    <div class="quick-product__price-block" data-money-format="{{ shop.money_format }}" >
+                      <p class="quick-product__compare-at-price {% unless product_card.selected_or_first_available_variant.compare_at_price > product_card.selected_or_first_available_variant.price %} hide {% endunless%}">{{ product_card.selected_or_first_available_variant.compare_at_price | money }}</p>
+                      <p class="quick-product__price">{{ product_card.selected_or_first_available_variant.price | money }}</p>
+                    </div>
+                    {%- if product_card.description != blank -%}
+                      <div class="quick-product__description">
+                        {{ product_card.description }}
+                      </div>
+                    {%- endif -%}
+                    <quick-add-form>
+                      {%- form 'product', product_card, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+                        <input type="hidden" name="id" class="product-variant"  value="{{ product_card.selected_or_first_available_variant.id }}">
+                        <input id="quick-add" type="hidden" name="properties[_Quick Add]" value="Quick Add">
+                        <div class="quick-product-options">
+                            {% for option in product_card.options_with_values %}
+                              <label>{{ option.name }}</label>
+                              <div class="select">
+                                <select
+                                  class="select__select"
+                                >
+                                  {%- for value in option.values -%}
+                                    <option value="{{ value }}" {% if option.selected_value == value %}selected="selected"{% endif %}>
+                                      {{ value }}
+                                    </option>
+                                  {%- endfor -%}
+                                </select>
+                              </div>
+                            {% endfor %}
+                            <script type="application/json">
+                              {{ product_card.variants | json }}
+                            </script>
+                        </div>
+                        <div class="quick-product__button">
+                          <button
+                            type="submit"
+                            name="add"
+                            class="feature-product__button-submit"
+                            {% if product_card.selected_or_first_available_variant.available == false %}disabled{% endif %}
+                          >
+                            {%- if product_card.selected_or_first_available_variant.available -%}
+                              <span class="feature-product__button-text">{{ 'sections.featured_products.quick-add-button' | t }}</span >
+                            {%- else -%}
+                              <span class="feature-product__button-text">{{ 'products.product.sold_out' | t }}</span >
+                            {%- endif -%}
+                              <span class="feature-product__button-text-adding">{{ 'sections.featured_products.quick-add-button_adding' | t }}</span>
+                              <span class="feature-product__button-text-added">{{ 'sections.featured_products.quick-add-button_added' | t }}</span>
+                          </button>
+                        </div>
+                      {%- endform -%}
+                    </quick-add-form>
+                    
+                  </div>
+                </quick-add-modal>
+              </div>
+              <button class="quick-add-modal__close">{% render 'icon-close' %}</button>
+            </div>
+          </div>
+        </quick-add-modal-opener>
+      {% else %}
+        <quick-add-form>
+          {%- form 'product', product_card, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+            <input type="hidden" name="id" value="{{ product_card.selected_or_first_available_variant.id }}">
+            <input id="quick-add" type="hidden" name="properties[_Quick Add]" value="Quick Add">
+            <button
+              type="submit"
+              name="add"
+              class="feature-product__button-submit"
+              {% if product_card.selected_or_first_available_variant.available == false %}disabled{% endif %}
+            >
+              {%- if product_card.selected_or_first_available_variant.available -%}
+                <span class="feature-product__button-text">{{ 'sections.featured_products.quick-add-button' | t }}</span >
+              {%- else -%}
+                <span class="feature-product__button-text">{{ 'products.product.sold_out' | t }}</span >
+              {%- endif -%}
+                <span class="feature-product__button-text-adding">{{ 'sections.featured_products.quick-add-button_adding' | t }}</span>
+                <span class="feature-product__button-text-added">{{ 'sections.featured_products.quick-add-button_added' | t }}</span>
+            </button>
+          {%- endform -%}
+        </quick-add-form>
+      {% endif %}
+    {% endif %}
+  </div>
+</div>
