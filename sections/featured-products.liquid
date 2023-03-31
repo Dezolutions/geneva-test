@@ -35,19 +35,19 @@
 
 {% schema %}
 {
-  "name": "Featured products",
+  "name": "t:sections.featured_products.name",
   "tag": "section",
   "settings": [
     {
       "type": "text",
       "id": "title",
       "default": "Featured products",
-      "label": "Section title"
+      "label": "t:sections.featured_products.section_label"
     },
     {
       "type": "range",
       "id": "section_width",
-      "label": "Section container width '%'",
+      "label": "t:sections.featured_products.container_width",
       "min": 80,
       "max": 100,
       "step": 1,
@@ -56,7 +56,7 @@
     {
       "type": "range",
       "id": "column_number_desktop",
-      "label": "Number of columns on desktop",
+      "label": "t:sections.featured_products.desktop_columns",
       "min": 2,
       "max": 4,
       "step": 1,
@@ -65,15 +65,15 @@
     {
       "type": "select",
       "id": "column_number_mobile",
-      "label": "Number of columns on mobile",
+      "label": "t:sections.featured_products.mobile_columns.name",
       "options": [
         {
           "value": "1",
-          "label": "1"
+          "label": "t:sections.featured_products.mobile_columns.option_1"
         },
         {
           "value": "2",
-          "label": "2"
+          "label": "t:sections.featured_products.mobile_columns.option_2"
         }
       ],
       "default": "1"
@@ -84,58 +84,58 @@
       "options": [
         {
           "value": "1-1",
-          "label": "1:1"
+          "label": "t:sections.featured_products.aspect_ratio.option_1"
         },
         {
           "value": "16-9",
-          "label": "16:9"
+          "label": "t:sections.featured_products.aspect_ratio.option_2"
         },
         {
           "value": "4-3",
-          "label": "4:3"
+          "label": "t:sections.featured_products.aspect_ratio.option_3"
         },
         {
           "value": "3-4",
-          "label": "3:4"
+          "label": "t:sections.featured_products.aspect_ratio.option_4"
         }
       ],
       "default": "1-1",
-      "label": "Image aspect ratio"
+      "label": "t:sections.featured_products.aspect_ratio.name"
     },
     {
       "type": "checkbox",
       "id": "quick_add",
       "default": false,
-      "label": "Add quick add function"
+      "label": "t:sections.featured_products.quick_add"
     }
   ],
   "blocks": [
     {
       "type": "product-block",
-      "name": "Product Block",
+      "name": "t:sections.featured_products.blocks.name",
       "settings": [
         {
           "type": "product",
           "id": "product",
-          "label": "Product"
+          "label": "t:sections.featured_products.blocks.product_label"
         },
         {
           "type": "image_picker",
           "id": "custom_image",
-          "label": "Custom image instead of featured image"
+          "label": "t:sections.featured_products.blocks.custom_image"
         },
         {
           "type": "select",
           "id": "image_format",
-          "label": "Format of image container",
+          "label": "t:sections.featured_products.blocks.image_format.name",
           "options": [
             {
               "value": "cover",
-              "label": "cover"
+              "label": "t:sections.featured_products.blocks.image_format.option_1"
             },
             {
               "value": "contain",
-              "label": "contain"
+              "label": "t:sections.featured_products.blocks.image_format.option_2"
             }
           ],
           "default": "contain"
@@ -145,7 +145,7 @@
   ],
   "presets": [
     {
-      "name": "Featured products",
+      "name": "t:sections.featured_products.name",
       "blocks": [
         {
           "type": "product-block"

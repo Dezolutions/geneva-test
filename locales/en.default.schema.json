@@ -212,6 +212,35 @@
     }
   },
   "sections": {
+    "featured_products": {
+      "name": "Featured products",
+      "section_label": "Section title",
+      "container_width": "Section container width '%'",
+      "desktop_columns": "Number of columns on desktop",
+      "mobile_columns": {
+        "name": "Number of columns on mobile",
+        "option_1": "1",
+        "option_2": "2"
+      },
+      "aspect_ratio": {
+        "name": "Image aspect ratio",
+        "option_1": "1:1",
+        "option_2": "16:9",
+        "option_3": "4:3",
+        "option_4": "3:4"
+      },
+      "quick_add": "Add quick add function",
+      "blocks": {
+        "name": "Product Block",
+        "product_label": "Product",
+        "custom_image": "Custom image instead of featured image",
+        "image_format": {
+          "name": "Format of image container",
+          "option_1": "cover",
+          "option_2": "contain"
+        }
+      }
+    },
     "announcement-bar": {
       "name": "Announcement bar",
       "blocks": {
