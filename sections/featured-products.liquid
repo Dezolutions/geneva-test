@@ -20,14 +20,18 @@
           product_card: block.settings.product,
           aspect-ratio: section.settings.aspect_ratio,
           custom-image: block.settings.custom_image,
-          image-format: block.settings.image_format
+          image-format: block.settings.image_format,
+          quick-add: section.settings.quick_add
         %}
       </li> 
     {% endfor %}
   </ul>
 </div>
-
-<script src="{{ 'feature-clip.js' | asset_url }}" defer="defer"></script>
+{%- if section.settings.quick_add -%}
+  <link rel="stylesheet" href="{{ 'feature-quick-add.css' | asset_url }}" media="print" onload="this.media='all'">
+  <script src="{{ 'feature-quick-add.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+<script src="{{ 'feature-video.js' | asset_url }}" defer="defer"></script>
 
 {% schema %}
 {
@@ -97,6 +101,12 @@
       ],
       "default": "1-1",
       "label": "Image aspect ratio"
+    },
+    {
+      "type": "checkbox",
+      "id": "quick_add",
+      "default": false,
+      "label": "Add quick add function"
     }
   ],
   "blocks": [

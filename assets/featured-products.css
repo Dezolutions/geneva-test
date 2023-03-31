@@ -21,16 +21,46 @@
   height: 100%;
   object-fit: cover;
 }
-.feature-product__button-link {
+.product__compare-at-price,
+.product__price {
+  margin: 0;
+}
+.product__price-block {
+  display: flex;
+}
+.product__compare-at-price {
+  text-decoration: line-through;
+  margin-right: 1rem;
+}
+.hide {
+  display: none;
+}
+.feature-product__button-link, 
+.feature-product__button-submit,
+.feature-product__button-modal {
   color: black;
   text-decoration: none;
-  padding: 1rem 2rem;
+  padding: 1.4rem 2rem;
   width: 100%;
   display: block;
+  height: 5rem;
   border: 1px solid black;
   text-align: center;
-  margin-top: 15px;
+  margin-top: 1.5rem;
   transition: all .4s ease;
+  cursor: pointer;
+  line-height: 1.2;
+  background-color: white;
+}
+
+.feature-product__button-submit, 
+.feature-product__button-modal {
+  color: white;
+  background-color: black;
+}
+.feature-product__button-submit:hover, 
+.feature-product__button-modal:hover {
+  background-color: rgb(66, 66, 66);
 }
 .feature-product__button-link:hover {
   background-color: black;

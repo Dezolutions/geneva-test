@@ -11,28 +11,29 @@ class FeatureMedia extends HTMLElement {
   }
 
   onMouseOver() {
-    this.clip?.play()
+    this.clip?.play();
   }
 
   onMouseOut() {
-    this.clip?.pause()
+    this.clip?.pause();
   }
 
   onTouchEvent() {
     if (this.flag === true) {
-      this.clip?.play()
-      this.flag = false
+      this.clip?.play();
+      this.flag = false;
     }
     else {
-      this.clip?.pause()
-      this.flag = true
+      this.clip?.pause();
+      this.flag = true;
     }
     if (this.clip) {
-      this.img?.classList.toggle('feature-card-img-hover')
-      this.videoBlock?.classList.toggle('feature-card-video-active')
+      this.img?.classList.toggle('feature-card-img-hover');
+      this.videoBlock?.classList.toggle('feature-card-video-active');
     }
-
   }
-
 }
-customElements.define('feature-media', FeatureMedia);
+
+if(!customElements.get('feature-media')) {
+  customElements.define('feature-media', FeatureMedia);
+}
